@@ -1,0 +1,35 @@
+name: Fetch M3U8 Token
+
+on:
+  workflow_dispatch: 
+  schedule:
+    - cron: '*/20 * * * *'  
+
+jobs:
+  fetch-token:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install httpx
+
+      - name: Run token fetch script
+        run: python fetch_token.py
+
+      - name: Show saved token
+        run: cat cookie.txt
+
+      - name: Upload cookie.txt as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: m3u8-token
+          path: cookie.txt
