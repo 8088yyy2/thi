@@ -35,12 +35,15 @@ with httpx.Client(http2=True, headers=headers, follow_redirects=True, timeout=20
         print(response.text)
         exit(1)
 
-    # Extract ?token= from playlist
-    match = re.search(r"\?token=[a-f0-9\-]+", response.text)
-    if match:
-        token = match.group(0)
+    # Extract all ?token=… entries (case-insensitive)
+    tokens = re.findall(r"\?token=[A-Za-z0-9\-]+", response.text)
+    if tokens:
         with open(cookie_file, "w") as f:
-            f.write(token + "\n")
-        print(f"Token saved to {cookie_file}: {token}")
+            for t in tokens:
+                f.write(t + "\n")
+        print(f"{len(tokens)} token(s) saved to {cookie_file}")
     else:
         print("Token not found in playlist")
+        # Save full playlist for debugging
+        with open(cookie_file, "w") as f:
+            f.write(response.text)
