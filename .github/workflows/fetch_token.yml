@@ -25,7 +25,7 @@ jobs:
       - name: Run token fetch script
         run: python fetch_token.py
 
-      - name: Show saved token
+      - name: Show saved token(s)
         run: cat cookie.txt
 
       - name: Upload cookie.txt as artifact
