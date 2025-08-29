@@ -8,7 +8,7 @@ encoded_host = "dHYudmFhbmFtMjQuY29t"
 encoded_origin = "aHR0cHM6Ly90di52YWFuYW0yNC5jb20v"
 encoded_referer = "aHR0cHM6Ly90di52YWFuYW0yNC5jb20v"
 
-# Decode values
+# Decode Base64
 url = base64.b64decode(encoded_url).decode()
 host = base64.b64decode(encoded_host).decode()
 origin = base64.b64decode(encoded_origin).decode()
